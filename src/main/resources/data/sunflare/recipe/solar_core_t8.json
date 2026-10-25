@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:nether_star"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t7"
+    }
+  },
+  "result": {
+    "id": "sunflare:solar_core_t8",
+    "count": 1
+  }
+}

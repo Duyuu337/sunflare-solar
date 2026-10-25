@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "sunflare:block/priority_bus_node"
+    }
+  }
+}

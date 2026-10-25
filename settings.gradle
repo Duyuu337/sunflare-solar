@@ -1,0 +1,16 @@
+pluginManagement {
+    repositories {
+        // 国内镜像优先，命中不了再回落官方源
+        maven { name = 'AliyunGradlePlugin'; url = 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { name = 'AliyunPublic'; url = 'https://maven.aliyun.com/repository/public' }
+        maven { name = 'NeoForged'; url = 'https://maven.neoforged.net/releases' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'SunflareSolar'

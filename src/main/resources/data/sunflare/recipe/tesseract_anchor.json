@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "EOE",
+    "OCO",
+    "EOE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t3"
+    }
+  },
+  "result": {
+    "id": "sunflare:tesseract_anchor",
+    "count": 1
+  }
+}

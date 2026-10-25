@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t3"
+    }
+  },
+  "result": {
+    "id": "sunflare:solar_core_t4",
+    "count": 1
+  }
+}

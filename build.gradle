@@ -1,0 +1,84 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.78'
+}
+
+version = "${mod_version}"
+group = mod_group_id
+
+base {
+    // 文件名即启动器里显示的名字，去掉 +mc 后缀，读起来干净一点
+    archivesName = 'Sunflare-Solar'
+}
+
+// 中央仓库走阿里云镜像；NeoForge 自身没有镜像，只能由代理直连
+// local-maven 是本机补的 minecraft-dependencies 聚合 POM（镜像缺这个构件）
+repositories {
+    maven { name = 'LocalMavenDependencies'; url = file('local-maven') }
+    maven { name = 'AliyunPublic'; url = 'https://maven.aliyun.com/repository/public' }
+    mavenCentral()
+}
+
+// Curios 是可选依赖：源码里只在 Curios 存在时才加载相关类，
+// 这里用本地 vendored jar 编译，运行期由 ModList 判断是否可用。
+dependencies {
+    compileOnly files('libs/curios-neoforge-9.5.1+1.21.1.jar')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+def replaceProperties = [
+        minecraft_version      : minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neo_version            : neo_version,
+        neo_version_range      : neo_version_range,
+        loader_version_range   : loader_version_range,
+        mod_id                 : mod_id,
+        mod_name               : mod_name,
+        mod_license            : mod_license,
+        mod_version            : mod_version
+]
+
+def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    // 兼容只认 legacy 文件名的第三方工具（例如 PCL2 的模组列表）
+    from('src/main/templates/META-INF/neoforge.mods.toml') {
+        rename { 'mods.toml' }
+        into 'META-INF'
+    }
+    into layout.buildDirectory.dir('generated/sources/modMetadata')
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}

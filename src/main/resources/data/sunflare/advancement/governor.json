@@ -1,0 +1,26 @@
+{
+  "parent": "sunflare:sunshine",
+  "display": {
+    "icon": {
+      "id": "sunflare:flux_governor"
+    },
+    "title": {
+      "translate": "adv.sunflare.governor.title"
+    },
+    "description": {
+      "translate": "adv.sunflare.governor.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "online": {
+      "trigger": "sunflare:event",
+      "conditions": {
+        "code": "governor_online"
+      }
+    }
+  }
+}

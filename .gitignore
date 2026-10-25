@@ -1,0 +1,13 @@
+.gradle/
+build/
+run/
+run-server/
+out/
+.idea/
+*.iml
+*.log
+
+# Curios 是可选依赖，编译用本地 jar，不入库（第三方二进制，且体积大）
+# 新环境需要在 libs/ 放一份 curios-neoforge-9.5.1+1.21.1.jar
+libs/*.jar
+

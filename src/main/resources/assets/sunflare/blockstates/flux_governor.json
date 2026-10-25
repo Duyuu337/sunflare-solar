@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "sunflare:block/flux_governor"
+    }
+  }
+}

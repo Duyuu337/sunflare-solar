@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AEA",
+    "ECE",
+    "AEA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t3"
+    }
+  },
+  "result": {
+    "id": "sunflare:subspace_resonance_crystal",
+    "count": 2
+  }
+}

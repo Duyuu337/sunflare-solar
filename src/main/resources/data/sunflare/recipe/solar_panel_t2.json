@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "FGF",
+    "GCG",
+    "FGF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:gold_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t2"
+    }
+  },
+  "result": {
+    "id": "sunflare:solar_panel_t2",
+    "count": 1
+  }
+}

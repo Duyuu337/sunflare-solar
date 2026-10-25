@@ -1,0 +1,26 @@
+{
+  "parent": "sunflare:governor",
+  "display": {
+    "icon": {
+      "id": "minecraft:redstone_comparator"
+    },
+    "title": {
+      "translate": "adv.sunflare.over.title"
+    },
+    "description": {
+      "translate": "adv.sunflare.over.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "zero": {
+      "trigger": "sunflare:event",
+      "conditions": {
+        "code": "governor_zero"
+      }
+    }
+  }
+}

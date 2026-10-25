@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "sunflare:solar_panel_t1",
+    "sunflare:solar_panel_t2",
+    "sunflare:solar_panel_t3",
+    "sunflare:solar_panel_t4",
+    "sunflare:solar_panel_t5",
+    "sunflare:solar_panel_t6",
+    "sunflare:solar_panel_t7",
+    "sunflare:solar_panel_t8"
+  ]
+}

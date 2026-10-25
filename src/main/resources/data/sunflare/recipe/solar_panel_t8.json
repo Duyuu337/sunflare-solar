@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "NEN",
+    "ECE",
+    "NEN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_block"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t8"
+    }
+  },
+  "result": {
+    "id": "sunflare:solar_panel_t8",
+    "count": 1
+  }
+}

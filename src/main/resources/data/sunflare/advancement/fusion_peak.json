@@ -1,0 +1,30 @@
+{
+  "parent": "sunflare:sunshine",
+  "display": {
+    "icon": {
+      "id": "sunflare:solar_panel_t8"
+    },
+    "title": {
+      "translate": "adv.sunflare.fusion.title"
+    },
+    "description": {
+      "translate": "adv.sunflare.fusion.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_flare": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "sunflare:solar_panel_t8"
+          }
+        ]
+      }
+    }
+  }
+}

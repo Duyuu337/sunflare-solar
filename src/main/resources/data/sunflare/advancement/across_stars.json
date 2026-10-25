@@ -1,0 +1,26 @@
+{
+  "parent": "sunflare:governor",
+  "display": {
+    "icon": {
+      "id": "sunflare:subspace_relay_beacon"
+    },
+    "title": {
+      "translate": "adv.sunflare.stars.title"
+    },
+    "description": {
+      "translate": "adv.sunflare.stars.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "charge": {
+      "trigger": "sunflare:event",
+      "conditions": {
+        "code": "cross_dim_charge"
+      }
+    }
+  }
+}

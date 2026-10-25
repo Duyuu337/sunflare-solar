@@ -1,0 +1,26 @@
+// 把任何指向 maven.neoforged.net 的仓库重写到 ForgeCDN 镜像。
+//
+// 为什么需要它：ModDevGradle 会在插件内部注册官方仓库，且可能对 net.neoforged 组做
+// exclusiveContent，光在 build.gradle 里追加一个镜像仓库并不能阻止 Gradle 先去撞坏地址。
+// 直接改仓库 URL 最稳，与插件的注册顺序、exclusivity 都无关。
+//
+// 用法：
+//   gradlew.bat -I gradle/neoforged-mirror.init.gradle build
+// 或者把本文件复制到 %USERPROFILE%\.gradle\init.gradle（对所有项目生效）
+
+def official = 'maven.neoforged.net'
+def mirror = 'https://neoforged.forgecdn.net/releases'
+
+gradle.projectsLoaded {
+    gradle.rootProject.allprojects { project ->
+        project.repositories.all { repo ->
+            if (repo instanceof MavenArtifactRepository) {
+                def current = repo.url.toString()
+                if (current.contains(official)) {
+                    repo.url = mirror
+                    project.logger.lifecycle("[neo-mirror] ${current} -> ${mirror}")
+                }
+            }
+        }
+    }
+}

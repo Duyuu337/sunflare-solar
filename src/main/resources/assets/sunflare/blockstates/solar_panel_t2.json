@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "sunflare:block/solar_panel_t2"
+    },
+    "active=true": {
+      "model": "sunflare:block/solar_panel_t2_active"
+    }
+  }
+}

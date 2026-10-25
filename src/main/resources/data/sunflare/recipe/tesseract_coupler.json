@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ERE",
+    "RCR",
+    "ERE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "R": {
+      "item": "sunflare:subspace_resonance_crystal"
+    },
+    "C": {
+      "item": "sunflare:solar_core_t4"
+    }
+  },
+  "result": {
+    "id": "sunflare:tesseract_coupler",
+    "count": 1
+  }
+}

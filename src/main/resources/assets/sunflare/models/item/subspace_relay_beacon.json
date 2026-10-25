@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sunflare:item/subspace_relay_beacon"
+  }
+}

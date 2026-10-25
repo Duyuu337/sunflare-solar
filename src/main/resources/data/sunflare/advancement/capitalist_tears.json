@@ -1,0 +1,26 @@
+{
+  "parent": "sunflare:governor",
+  "display": {
+    "icon": {
+      "id": "sunflare:priority_bus_node"
+    },
+    "title": {
+      "translate": "adv.sunflare.capitalist.title"
+    },
+    "description": {
+      "translate": "adv.sunflare.capitalist.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "cut": {
+      "trigger": "sunflare:event",
+      "conditions": {
+        "code": "bus_cut"
+      }
+    }
+  }
+}
