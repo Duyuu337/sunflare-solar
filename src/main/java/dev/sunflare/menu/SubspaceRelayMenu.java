@@ -19,6 +19,7 @@ public class SubspaceRelayMenu extends AbstractContainerMenu {
     public static final int BUTTON_EJECT = 1;
 
     private final ContainerData data;
+    private net.minecraft.world.entity.player.Player menuPlayer;
     private final Inventory playerInventory;
 
     public SubspaceRelayMenu(int containerId, Inventory inventory, FriendlyByteBuf buffer) {
@@ -28,14 +29,18 @@ public class SubspaceRelayMenu extends AbstractContainerMenu {
     public SubspaceRelayMenu(int containerId, Inventory inventory) {
         super(SunflareRegistry.SUBSPACE_RELAY_MENU.get(), containerId);
         this.playerInventory = inventory;
+        this.menuPlayer = inventory.player;
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
                 ItemStack beacon = held();
+                var p2 = menuPlayer;
                 return switch (index) {
                     case 0 -> ItemEnergy.get(beacon);
                     case 1 -> SubspaceRelayBeaconItem.capacity();
                     case 2 -> ItemEnergy.hasLink(beacon) ? 1 : 0;
+                    case 3 -> p2 == null || dev.sunflare.compat.CuriosCompat.findEquipped(p2).isEmpty() ? 0 : 1;
+                    case 4 -> evalLink();
                     default -> 0;
                 };
             }
@@ -47,7 +52,7 @@ public class SubspaceRelayMenu extends AbstractContainerMenu {
 
             @Override
             public int getCount() {
-                return 3;
+                return 5;
             }
         };
         this.addDataSlots(this.data);
@@ -79,6 +84,47 @@ public class SubspaceRelayMenu extends AbstractContainerMenu {
 
     public int hasCard() {
         return this.data.get(2);
+    }
+
+    public int equipped() {
+        return this.data.get(3);
+    }
+
+    public int linkStatus() {
+        return this.data.get(4);
+    }
+
+    /** 0=正常 1=本地模式 2=区块未加载 3=链接失效 4=面板没电 */
+    private int evalLink() {
+        ItemStack beacon = held();
+        if (beacon.isEmpty() || !ItemEnergy.hasLink(beacon)) {
+            return 1;
+        }
+        var player = this.menuPlayer;
+        if (player == null || player.getServer() == null) {
+            return 0;
+        }
+        net.minecraft.server.level.ServerLevel level;
+        net.minecraft.core.BlockPos pos;
+        try {
+            var key = net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.DIMENSION,
+                    net.minecraft.resources.ResourceLocation.parse(ItemEnergy.linkDim(beacon)));
+            level = player.getServer().getLevel(key);
+            pos = net.minecraft.core.BlockPos.of(ItemEnergy.linkPos(beacon));
+        } catch (RuntimeException exception) {
+            return 3;
+        }
+        if (level == null) {
+            return 3;
+        }
+        if (!level.isLoaded(pos)) {
+            return 2;
+        }
+        if (!(level.getBlockEntity(pos) instanceof dev.sunflare.block.SolarPanelBlockEntity panel)) {
+            return 3;
+        }
+        return panel.getEnergyStored() > 0 ? 0 : 4;
     }
 
     @Override

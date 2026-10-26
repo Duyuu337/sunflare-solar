@@ -125,7 +125,21 @@ public class SubspaceRelayScreen extends AbstractContainerScreen<SubspaceRelayMe
                 ? Component.translatable("sunflare.gui.relay.linked")
                 : Component.translatable("sunflare.gui.relay.nolink");
         g.drawString(this.font, link, 14, 46, ACCENT, false);
-        g.drawString(this.font, Component.translatable("sunflare.gui.relay.hint"), 14, 58, LABEL, false);
+        Component status;
+        boolean working;
+        if (this.menu.equipped() == 0) {
+            status = Component.translatable("sunflare.gui.relay.notEquipped");
+            working = false;
+        } else {
+            switch (this.menu.linkStatus()) {
+                case 1 -> { status = Component.translatable("sunflare.gui.relay.status.local"); working = true; }
+                case 2 -> { status = Component.translatable("sunflare.gui.relay.status.unloaded"); working = false; }
+                case 3 -> { status = Component.translatable("sunflare.gui.relay.status.broken"); working = false; }
+                case 4 -> { status = Component.translatable("sunflare.gui.relay.status.empty"); working = false; }
+                default -> { status = Component.translatable("sunflare.gui.relay.working"); working = true; }
+            }
+        }
+        g.drawString(this.font, status, 14, 58, working ? 0xFF2E7D32 : 0xFFB03A2E, false);
 
         boolean canInsert = this.menu.hasCard() == 0;
         Component label = Component.translatable(canInsert ? "sunflare.gui.relay.insert" : "sunflare.gui.relay.eject");

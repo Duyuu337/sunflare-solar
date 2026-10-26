@@ -60,7 +60,7 @@
   "block.sunflare.flux_governor.desc": "扫描附近的耀阳板，缓冲将满时自动降低它们的输出。",
   "block.sunflare.priority_bus_node.desc": "FE 中转节点，优先级 1-5，电量低时低优先级先断开。",
   "block.sunflare.tesseract_anchor.desc": "强制加载所在区块并保持运转，让远端面板继续发电。",
-  "sunflare.relay.tooltip.desc": "从附近的耀阳板抽电，为背包和饰品栏里的能量物品充能。",
+  "sunflare.relay.tooltip.desc": "装备在饰品栏后自动工作：为背包与饰品栏内的能量物品充能。",
   "sunflare.relay.tooltip.desc2": "右键打开界面插入已绑定的耦合卡；信标必须装备在饰品栏才会工作。",
   "sunflare.coupler.tooltip.desc": "Shift 右键耀阳板绑定或解绑；绑定后插进中继信标的界面即可跨维度供电。",
   "sunflare.relay.status": "中继缓冲：%s / %s kFE",
@@ -86,5 +86,13 @@
   "sunflare.gui.relay.hint": "插入后可从绑定的面板跨维度抽电",
   "sunflare.gui.relay.insert": "插入耦合卡",
   "sunflare.gui.relay.eject": "取出耦合卡",
-  "sunflare.gui.value.rateScale": "%s FE/t · 倍率 %s%%"
+  "sunflare.gui.value.rateScale": "%s FE/t · 倍率 %s%%",
+  "sunflare.gui.relay.working": "状态：已装备，正在工作",
+  "sunflare.gui.relay.notEquipped": "状态：未装备饰品栏（不会工作）",
+  "sunflare.gui.relay.status.local": "本地模式（未插卡）",
+  "sunflare.gui.relay.status.unloaded": "源区块未加载",
+  "sunflare.gui.relay.status.broken": "链接失效（面板已拆除）",
+  "sunflare.gui.relay.status.empty": "源面板没电",
+  "sunflare.relay.tooltip.warn": "当前未装备饰品栏 —— 不会工作",
+  "sunflare.relay.tooltip.hint2": "手持右键可插卡/取卡；未装 Curios 时退化为背包模式。"
 }

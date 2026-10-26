@@ -127,7 +127,7 @@ public final class RelayLogic {
                 return true;
             }
         }
-        return false;
+        return CuriosCompat.hasChargeable(player);
     }
 
     private static int space(ItemStack stack) {

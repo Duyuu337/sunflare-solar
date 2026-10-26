@@ -60,7 +60,7 @@
   "block.sunflare.flux_governor.desc": "Scans nearby solar panels and throttles them when the buffer is full.",
   "block.sunflare.priority_bus_node.desc": "FE pass-through with priority 1-5; low priority gets cut first.",
   "block.sunflare.tesseract_anchor.desc": "Force-loads its chunk so remote panels keep generating.",
-  "sunflare.relay.tooltip.desc": "Draws FE from nearby panels to charge items in your inventory and curio slots.",
+  "sunflare.relay.tooltip.desc": "Worn in a curio slot: charges energy items in your inventory and curios.",
   "sunflare.relay.tooltip.desc2": "Right-click to open its GUI and insert a bound card. The beacon must be worn in a curio slot.",
   "sunflare.coupler.tooltip.desc": "Shift-right-click a solar panel to bind; insert into the relay beacon to use it.",
   "sunflare.relay.status": "Relay buffer: %s / %s kFE",
@@ -86,5 +86,13 @@
   "sunflare.gui.relay.hint": "Insert a bound card to draw power across dimensions",
   "sunflare.gui.relay.insert": "Insert coupling card",
   "sunflare.gui.relay.eject": "Eject coupling card",
-  "sunflare.gui.value.rateScale": "%s FE/t · %s%%"
+  "sunflare.gui.value.rateScale": "%s FE/t · %s%%",
+  "sunflare.gui.relay.working": "Status: equipped - working",
+  "sunflare.gui.relay.notEquipped": "Status: not in a curio slot - inactive",
+  "sunflare.gui.relay.status.local": "Local mode (no card)",
+  "sunflare.gui.relay.status.unloaded": "Source chunk not loaded",
+  "sunflare.gui.relay.status.broken": "Link broken (panel removed)",
+  "sunflare.gui.relay.status.empty": "Source panel is empty",
+  "sunflare.relay.tooltip.warn": "Not equipped in a curio slot - inactive",
+  "sunflare.relay.tooltip.hint2": "Right-click while held to insert/eject a card. Without Curios it falls back to inventory mode."
 }

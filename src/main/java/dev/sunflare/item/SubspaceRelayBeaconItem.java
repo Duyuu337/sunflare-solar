@@ -95,8 +95,9 @@ public class SubspaceRelayBeaconItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
+        int stored = ItemEnergy.get(stack);
         tooltip.add(Component.translatable("sunflare.relay.tooltip.energy",
-                        ItemEnergy.get(stack) / 1000, capacity() / 1000)
+                        stored / 1000, capacity() / 1000)
                 .withStyle(ChatFormatting.GRAY));
         if (ItemEnergy.hasLink(stack)) {
             BlockPos pos = BlockPos.of(ItemEnergy.linkPos(stack));
@@ -107,8 +108,8 @@ public class SubspaceRelayBeaconItem extends Item {
             tooltip.add(Component.translatable("sunflare.relay.tooltip.nolink")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
-        tooltip.add(Component.translatable("sunflare.relay.tooltip.desc").withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("sunflare.relay.tooltip.desc2").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("sunflare.relay.tooltip.desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("sunflare.relay.tooltip.hint2").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     public static ResourceLocation id(String path) {
