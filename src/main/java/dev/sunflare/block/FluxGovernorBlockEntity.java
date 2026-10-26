@@ -145,10 +145,11 @@ public class FluxGovernorBlockEntity extends BlockEntity {
         double high = SunflareConfig.HIGH_BUFFER.get();
         double low = SunflareConfig.LOW_BUFFER.get();
 
-        if (average > high || (this.isNetworkFull(level) && average > 0.5D)) {
+        boolean stuckAtZero = this.appliedScale <= 0.0F && average < high;
+        if (average > high) {
             this.saturatedScans++;
             this.appliedScale = this.saturatedScans >= SATURATED_SCANS_FOR_ZERO ? 0.0F : 0.5F;
-        } else if (average < low) {
+        } else if (average < low || stuckAtZero) {
             this.saturatedScans = 0;
             this.appliedScale = (float) Math.min(1.0D, this.appliedScale + SCALE_STEP);
         }

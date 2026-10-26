@@ -83,9 +83,11 @@ public class SubspaceRelayBeaconItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack beacon = player.getItemInHand(hand);
-        if (!level.isClientSide) {
-            player.displayClientMessage(Component.translatable("sunflare.relay.status",
-                    ItemEnergy.get(beacon) / 1000, capacity() / 1000), true);
+        if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(new net.minecraft.world.SimpleMenuProvider(
+                    (id, inventory, p) -> new dev.sunflare.menu.SubspaceRelayMenu(id, inventory),
+                    Component.translatable(this.getDescriptionId())), buffer -> {
+            });
         }
         return InteractionResultHolder.success(beacon);
     }

@@ -72,6 +72,10 @@ public final class RelayLogic {
         if (!equipped.isEmpty()) {
             return equipped;
         }
+        // 没装 Curios（没有饰品栏）时退化为背包模式
+        if (CuriosCompat.available()) {
+            return ItemStack.EMPTY;
+        }
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack stack = player.getInventory().getItem(i);
             if (stack.getItem() instanceof SubspaceRelayBeaconItem) {
@@ -87,7 +91,8 @@ public final class RelayLogic {
         int stored = ItemEnergy.get(beacon);
 
         int space = capacity - stored;
-        if (space > 0) {
+        // 只有真的存在可充电物品时才抽电，避免空抽
+        if (space > 0 && hasDemand(player)) {
             stored += draw(player, beacon, Math.min(space, transfer));
         }
 
@@ -115,14 +120,37 @@ public final class RelayLogic {
         ItemEnergy.set(beacon, stored);
     }
 
+    /** 背包 + 饰品栏里是否存在还能吃电的物品。 */
+    private static boolean hasDemand(Player player) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (space(player.getInventory().getItem(i)) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static int space(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return 0;
+        }
+        try {
+            var storage = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.ITEM, null);
+            if (storage != null && storage.canReceive()) {
+                return storage.receiveEnergy(Integer.MAX_VALUE, true);
+            }
+        } catch (RuntimeException ignored) {
+        }
+        return 0;
+    }
+
     private static int draw(Player player, ItemStack beacon, int amount) {
         if (amount <= 0) {
             return 0;
         }
         // 只有装备在饰品栏里的耦合卡才算数
-        ItemStack card = CuriosCompat.findWornCard(player);
-        return !card.isEmpty() && ItemEnergy.hasLink(card)
-                ? drawLinked(player, card, amount)
+        return ItemEnergy.hasLink(beacon)
+                ? drawLinked(player, beacon, amount)
                 : drawNearby(player, amount);
     }
 
@@ -196,6 +224,7 @@ public final class RelayLogic {
         for (int i = 0; i < player.getInventory().getContainerSize() && remaining > 0; i++) {
             remaining -= chargeStack(player.getInventory().getItem(i), beacon, remaining);
         }
+        remaining -= CuriosCompat.charge(player, remaining);
         return amount - remaining;
     }
 

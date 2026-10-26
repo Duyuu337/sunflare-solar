@@ -58,6 +58,10 @@ public final class SunflareRegistry {
             MENUS.register("flux_governor", () -> IMenuTypeExtension.create(
                     (containerId, inventory, buffer) -> new FluxGovernorMenu(containerId, inventory, buffer)));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<dev.sunflare.menu.SubspaceRelayMenu>> SUBSPACE_RELAY_MENU =
+            MENUS.register("subspace_relay", () -> IMenuTypeExtension.create(
+                    (containerId, inventory, buffer) -> new dev.sunflare.menu.SubspaceRelayMenu(containerId, inventory, buffer)));
+
     public static final DeferredHolder<MenuType<?>, MenuType<PriorityBusMenu>> PRIORITY_BUS_MENU =
             MENUS.register("priority_bus_node", () -> IMenuTypeExtension.create(
                     (containerId, inventory, buffer) -> new PriorityBusMenu(containerId, inventory, buffer)));
@@ -161,7 +165,8 @@ public final class SunflareRegistry {
 
     private static BlockBehaviour.Properties deviceProperties() {
         return BlockBehaviour.Properties.of()
-                .strength(4.0F, 8.0F)
+                // 徒手也能挖掉并掉落：硬度低、不要求正确工具
+                .strength(0.6F, 6.0F)
                 .sound(SoundType.METAL);
     }
 

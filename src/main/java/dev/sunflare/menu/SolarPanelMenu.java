@@ -53,6 +53,10 @@ public class SolarPanelMenu extends AbstractContainerMenu {
         return this.data.get(3);
     }
 
+    public int scalePercent() {
+        return this.data.get(5);
+    }
+
     public int rated() {
         return this.data.get(4);
     }

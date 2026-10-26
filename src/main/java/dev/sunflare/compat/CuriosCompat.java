@@ -27,6 +27,10 @@ public final class CuriosCompat {
         return AVAILABLE ? CuriosLookup.findWornCard(player) : ItemStack.EMPTY;
     }
 
+    public static int charge(Player player, int amount) {
+        return AVAILABLE ? CuriosLookup.charge(player, amount) : 0;
+    }
+
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         if (AVAILABLE) {
             CuriosLookup.registerCapabilities(event);

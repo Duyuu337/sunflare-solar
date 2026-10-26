@@ -30,5 +30,6 @@ public final class SunflareClient {
         event.register(SunflareRegistry.SOLAR_PANEL_MENU.get(), SolarPanelScreen::new);
         event.register(SunflareRegistry.FLUX_GOVERNOR_MENU.get(), FluxGovernorScreen::new);
         event.register(SunflareRegistry.PRIORITY_BUS_MENU.get(), PriorityBusScreen::new);
+        event.register(SunflareRegistry.SUBSPACE_RELAY_MENU.get(), SubspaceRelayScreen::new);
     }
 }

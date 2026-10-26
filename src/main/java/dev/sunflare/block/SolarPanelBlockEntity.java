@@ -44,6 +44,9 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
     /** 由通量调控器写入的输出倍率，0.0~1.0，持久化。 */
     private float outputScale = 1.0F;
 
+    /** 调控器最后一次写入倍率的游戏时间；用于判定“没人接管”后自动恢复。 */
+    private long lastScaleTouch;
+
     /** 缓存六个方向的相邻能量接口，邻居变化时由方块回调失效。 */
     private final IEnergyStorage[] neighbourHandlers = new IEnergyStorage[6];
     private final boolean[] neighbourKnown = new boolean[6];
@@ -58,6 +61,7 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
                 case 2 -> lastOutput;
                 case 3 -> tier.ordinal();
                 case 4 -> tier.peakFePerTick;
+                case 5 -> Math.round(outputScale * 100.0F);
                 default -> 0;
             };
         }
@@ -69,12 +73,14 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
                 energy = value;
             } else if (index == 2) {
                 lastOutput = value;
+            } else if (index == 5) {
+                outputScale = value / 100.0F;
             }
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
     };
 
@@ -99,6 +105,9 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
             this.outputScale = clamped;
             this.setChanged();
         }
+        if (this.level != null) {
+            this.lastScaleTouch = this.level.getGameTime();
+        }
     }
 
     public ContainerData data() {
@@ -121,6 +130,13 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
         Level level = this.level;
         if (level == null || level.isClientSide) {
             return;
+        }
+
+        // 倍率被压制但已经 10 秒没人改写（调控器被拆/搬走）→ 缓慢恢复
+        if (this.outputScale < 1.0F && level.getGameTime() - this.lastScaleTouch > 200L) {
+            this.outputScale = Math.min(1.0F, this.outputScale + 0.05F);
+            this.setChanged();
+            this.lastScaleTouch = level.getGameTime();
         }
 
         int produced = this.computeOutput(level);
@@ -224,8 +240,10 @@ public class SolarPanelBlockEntity extends BlockEntity implements IEnergyStorage
     @Override
     public int extractEnergy(int toExtract, boolean simulate) {
         int drained = Math.min(this.energy, Math.max(0, toExtract));
-        if (!simulate) {
+        if (!simulate && drained > 0) {
             this.energy -= drained;
+            // 被外部抽取不会走 serverTick 的保存节奏，这里主动标脏
+            this.setChanged();
         }
         return drained;
     }

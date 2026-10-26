@@ -8,6 +8,9 @@
     "sunflare:solar_panel_t5",
     "sunflare:solar_panel_t6",
     "sunflare:solar_panel_t7",
-    "sunflare:solar_panel_t8"
+    "sunflare:solar_panel_t8",
+    "sunflare:flux_governor",
+    "sunflare:priority_bus_node",
+    "sunflare:tesseract_anchor"
   ]
 }

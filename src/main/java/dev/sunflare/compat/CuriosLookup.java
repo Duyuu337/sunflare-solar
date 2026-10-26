@@ -54,6 +54,29 @@ final class CuriosLookup {
                 .orElse(ItemStack.EMPTY);
     }
 
+    static int charge(Player player, int amount) {
+        int[] left = {amount};
+        CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
+            for (ICurioStacksHandler stacksHandler : handler.getCurios().values()) {
+                var stacks = handler.getCurios().get(stacksHandler.getIdentifier()).getStacks();
+                for (int i = 0; i < stacks.getSlots() && left[0] > 0; i++) {
+                    ItemStack stack = stacks.getStackInSlot(i);
+                    if (stack.isEmpty()) {
+                        continue;
+                    }
+                    try {
+                        var storage = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.ITEM, null);
+                        if (storage != null && storage.canReceive()) {
+                            left[0] -= storage.receiveEnergy(left[0], false);
+                        }
+                    } catch (RuntimeException ignored) {
+                    }
+                }
+            }
+        });
+        return amount - left[0];
+    }
+
     static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(CuriosCapability.ITEM,
                 (stack, context) -> new CurioRelay(stack),
